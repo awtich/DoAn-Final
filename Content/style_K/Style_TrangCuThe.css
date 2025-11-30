@@ -1,0 +1,510 @@
+﻿/* --- CSS HOÀN CHỈNH CHO TRANG CHI TIẾT SẢN PHẨM --- */
+
+/* --- RESET NHẸ --- */
+.product-detail-container, .combo-wrapper-new, .related-products-wrapper {
+    font-family: "Segoe UI", sans-serif;
+    color: #222;
+}
+
+/* --- BỐ CỤC CHI TIẾT SẢN PHẨM --- */
+.product-detail-container {
+    display: flex;
+    gap: 35px;
+    margin: 35px auto;
+    max-width: 1260px;
+    padding: 0 15px;
+}
+
+/* ----- Cột Trái (Ảnh) ----- */
+.product-image-column {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.product-image-wrapper {
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 450px;
+    position: relative; /* Giữ lại để dễ đặt các thẻ/huy hiệu khác */
+}
+
+.product-main-image {
+    width: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+/* ----- Cột Phải (Thông tin) ----- */
+.product-info-column {
+    flex: 1;
+}
+
+/* --- Tên Sản Phẩm --- */
+.product-title {
+    font-size: 28px;
+    font-weight: 650;
+    margin-bottom: 12px;
+}
+
+/* ----- KHU VỰC GIÁ (ĐÃ TÍCH HỢP % GIẢM) ----- */
+.price-section {
+    display: block;
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #fff8f8;
+    border-radius: 6px;
+    border: 1px solid #ffebeb;
+}
+
+.price-row-sale {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.final-price-box {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-grow: 1;
+}
+
+.final-price {
+    font-size: 30px;
+    font-weight: 700;
+    color: #e60023;
+}
+
+.original-price {
+    font-size: 17px;
+    text-decoration: line-through; /* Giữ gạch ngang cho giá gốc */
+    color: #888;
+    margin-left: 6px;
+}
+
+.discount-percent-tag {
+    background: #ff4747;
+    padding: 4px 10px;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.sale-tag {
+    background: #ffe600;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/* Loại bỏ tem cũ */
+.discount-badge {
+    display: none;
+}
+
+
+/* --- Dung lượng & Màu sắc --- */
+.variant-group {
+    margin-top: 10px;
+}
+
+.variant-label {
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+.variant-option.is-selected {
+    background: #f1f3f8;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.color-swatch {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+}
+
+/* --- Mua hàng --- */
+.btn-add-to-cart-simple {
+    width: 100%;
+    padding: 15px;
+    background: #ff6a00;
+    color: #fff;
+    border-radius: 8px;
+    border: none;
+    margin-top: 14px;
+    font-size: 18px;
+    font-weight: 600;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+    .btn-add-to-cart-simple:hover {
+        background: #e65b00;
+    }
+
+.stock-info {
+    margin: 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.stock-out-of-stock {
+    color: #c20000;
+}
+
+.btn-out-of-stock {
+    padding: 15px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    background: #d8d8d8;
+    cursor: not-allowed;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* --- Mô tả --- */
+.product-description-box {
+    margin-top: 25px;
+}
+
+.description-title {
+    font-size: 20px;
+    font-weight: 650;
+}
+
+.description-content {
+    background: #fafafa;
+    padding: 15px;
+    border-radius: 10px;
+    line-height: 1.63;
+}
+
+/* ----- Thông số kỹ thuật ----- */
+.specs-section {
+    max-width: 1260px;
+    margin: 50px auto;
+    padding: 0 15px;
+}
+
+.specs-table {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+.specs-label {
+    width: 35%;
+    font-weight: 600;
+}
+
+.specs-table td {
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+
+/* --- COMBO MUA KÈM GIÁ SỐC (HOÀN THIỆN & KHÔNG GẠCH CHÂN) --- */
+.combo-wrapper-new {
+    max-width: 1260px;
+    margin: 45px auto;
+    padding: 25px;
+    background: linear-gradient(135deg, #fff7df, #ffe6b5);
+    border-radius: 14px;
+    border: 1px solid #ffd790;
+}
+
+.combo-new-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #d35400;
+    text-align: center;
+}
+
+.combo-new-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+/* Sản phẩm chính */
+.combo-new-main {
+    text-align: center;
+    width: 180px;
+}
+
+.combo-new-image-main {
+    width: 150px;
+    border-radius: 12px;
+}
+
+.combo-new-main-name {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 5px 0;
+}
+
+.combo-new-price.main-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e60023;
+}
+
+/* Icon dấu cộng */
+.combo-new-plus-icon {
+    font-size: 28px;
+    font-weight: 900;
+    color: #ff7300;
+}
+
+/* Danh sách phụ kiện */
+.combo-new-accessories {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.combo-new-item {
+    text-align: center;
+    width: 140px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    border: 1px solid #ffe2ba;
+    transition: 0.3s;
+    /* Bỏ gạch chân */
+    text-decoration: none;
+    color: inherit;
+}
+
+    .combo-new-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 18px rgba(255, 153, 0, 0.35);
+    }
+
+.combo-new-image {
+    width: 90px;
+    border-radius: 10px;
+}
+
+.combo-new-name {
+    font-size: 14px;
+    font-weight: 550;
+    margin-top: 5px;
+}
+
+.accessory-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: #e60023;
+    margin-top: 3px;
+}
+
+/* Hộp tổng bill combo */
+.combo-new-summary-box {
+    background: white;
+    border-radius: 12px;
+    padding: 18px;
+    width: 260px;
+    border: 1px solid #ffd691;
+}
+
+.combo-new-summary-header {
+    font-size: 17px;
+    font-weight: 700;
+    color: #d35400;
+    margin-bottom: 12px;
+}
+
+.detail-label {
+    font-weight: 600;
+}
+
+.combo-new-summary-detail {
+    display: flex;
+    justify-content: space-between;
+    margin: 6px 0;
+}
+
+.combo-new-total-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.combo-new-total-price {
+    font-size: 21px;
+    font-weight: 700;
+    color: #e60023;
+}
+
+.btn-buy-combo-new {
+    width: 100%;
+    padding: 14px;
+    background: #ff6a00;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    margin-top: 14px;
+    font-weight: 650;
+    transition: 0.3s;
+}
+
+    .btn-buy-combo-new:hover {
+        background: #e05800;
+    }
+
+.combo-note {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+}
+
+/* ----- Sản phẩm liên quan (HOÀN THIỆN & KHÔNG GẠCH CHÂN) ----- */
+.related-products-wrapper {
+    max-width: 1260px;
+    margin: 55px auto;
+    padding: 0 15px;
+}
+
+    .related-products-wrapper .section-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #222;
+    }
+
+.related-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.related-product-card {
+    background: white;
+    border-radius: 14px;
+    padding: 14px;
+    border: 1px solid #eee;
+    text-align: center;
+    transition: 0.3s;
+    cursor: pointer;
+    /* Bỏ gạch chân */
+    text-decoration: none;
+    color: inherit;
+}
+
+    .related-product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+
+.related-image {
+    width: 95%;
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+
+.related-name {
+    font-size: 15px;
+    font-weight: 600;
+    min-height: 42px;
+}
+
+.related-price {
+    font-size: 17px;
+    font-weight: 700;
+    color: #e60023;
+    margin-top: 6px;
+}
+
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+    .product-detail-container {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 860px) {
+    .product-detail-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .product-info-column {
+        padding-top: 10px;
+    }
+
+    .price-row-sale {
+        justify-content: center; /* Căn giữa các phần tử giá trên mobile */
+    }
+
+    .combo-new-inner {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 550px) {
+    .product-title {
+        font-size: 23px;
+    }
+
+    .final-price {
+        font-size: 26px;
+    }
+
+    .price-row-sale {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 0 10px;
+    }
+
+    .final-price-box {
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    /* Bảng thông số kỹ thuật (dạng xếp chồng) */
+    .specs-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .specs-label {
+        font-weight: 700;
+    }
+
+    /* Sản phẩm liên quan (2 cột) */
+    .related-list {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .related-product-card {
+        padding: 10px;
+    }
+
+    .related-name {
+        min-height: 38px;
+        font-size: 14px;
+    }
+}

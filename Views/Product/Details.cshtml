@@ -1,0 +1,247 @@
+﻿@using System.Collections.Generic
+@using DoAn_web.Models
+@model DoAn_web.Models.Product
+
+@{
+    ViewBag.Title = Model.ProductName;
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+
+    var combo = ViewBag.ComboAccessories as List<Product>;
+    var related = ViewBag.RelatedProducts as List<DoAn_web.Models.Product>;
+
+    // --- 1. LOGIC TÍNH TOÁN FLASH SALE ---
+    var flashSale = ViewBag.FlashSale as DoAn_web.Models.FlashSaleItem;
+
+    bool isSale = false;
+    decimal finalPrice = Model.ProductPrice; // Mặc định là giá gốc
+    int discountPercent = 0;
+
+    // Kiểm tra: Có flash sale VÀ số lượng bán chưa vượt quá giới hạn
+    if (flashSale != null && flashSale.SoldQuantity < flashSale.SaleQuantityLimit)
+    {
+        isSale = true;
+        finalPrice = flashSale.SalePrice; // Dùng giá Flash Sale
+
+        if (Model.ProductPrice > 0)
+        {
+            discountPercent = (int)((Model.ProductPrice - finalPrice) / Model.ProductPrice * 100);
+        }
+    }
+}
+
+<link href="~/Content/style_K/Style_TrangCuThe.css" rel="stylesheet" />
+
+
+<div class="product-detail-container">
+    @* --- CỘT TRÁI: ẢNH SẢN PHẨM (ĐÃ XÓA TEM) --- *@
+    <div class="product-image-column">
+        <div class="product-image-wrapper">
+            <img src="@Url.Content(Model.ProductImage)" alt="@Model.ProductName" class="product-main-image" />
+        </div>
+    </div>
+
+    @* --- CỘT PHẢI: THÔNG TIN & GIÁ --- *@
+    <div class="product-info-column">
+
+        <h1 class="product-title">@Model.ProductName</h1>
+
+        @* --- KHU VỰC GIÁ (MỚI) --- *@
+        <div class="price-section">
+            @if (isSale)
+            {
+                @* TRƯỜNG HỢP CÓ SALE: Giá đỏ to + Giá gốc gạch ngang + % Giảm *@
+                <div class="price-row-sale">
+                    <div class="final-price-box">
+                        <span class="final-price">@String.Format("{0:N0}", finalPrice) đ</span>
+                        <span class="original-price">@String.Format("{0:N0}", Model.ProductPrice) đ</span>
+                    </div>
+
+                    @if (discountPercent > 0)
+                    {
+                        <div class="discount-percent-tag">
+                            Giảm: -@discountPercent%
+                        </div>
+                    }
+                    <div class="sale-tag">
+                        <i class="fas fa-bolt"></i> Giá Flash Sale
+                    </div>
+
+                </div>
+            }
+            else
+            {
+                @* TRƯỜNG HỢP KHÔNG SALE *@
+                <div class="final-price-box">
+                    <span class="final-price">@String.Format("{0:N0}", Model.ProductPrice) đ</span>
+                </div>
+            }
+        </div>
+
+        <div class="product-variants-section">
+            @* 1. Hiển thị Dung lượng *@
+            @if (Model.Storage != null)
+            {
+                <div class="variant-group">
+                    <span class="variant-label">Dung lượng:</span>
+                    <div class="variant-option is-selected">
+                        @Model.Storage.StorageName
+                    </div>
+                </div>
+            }
+
+            @* 2. Hiển thị Màu sắc *@
+            @if (Model.Color != null)
+            {
+                <div class="variant-group">
+                    <span class="variant-label">Màu sắc:</span>
+                    <div class="variant-option is-selected">
+                        <span class="color-swatch" style="background-color: @Model.Color.ColorCode;"></span>
+                        @Model.Color.ColorName
+                    </div>
+                </div>
+            }
+        </div>
+
+        <hr class="separator" />
+
+        @* --- PHẦN MUA HÀNG --- *@
+        @if (Model.Quantity > 0)
+        {
+            <div class="stock-info stock-available">
+                <i class="fas fa-check-circle"></i> Còn hàng: <span class="stock-quantity">@Model.Quantity</span> sản phẩm
+                @if (isSale)
+                {
+                    <span class="sale-alert">🔥 Đang mở bán Flash Sale</span>
+                }
+            </div>
+
+            @* Chỉ giữ lại nút Thêm vào giỏ hàng đơn giản *@
+            using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post))
+            {
+                @Html.Hidden("productID", Model.ProductID)
+                @Html.Hidden("quantity", 1)
+
+                <button type="submit" class="btn-add-to-cart-simple">
+                    <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
+                </button>
+            }
+
+        }
+        else
+        {
+            <div class="stock-info stock-out-of-stock">
+                <i class="fas fa-times-circle"></i> <strong>Sản phẩm này tạm thời hết hàng!</strong>
+            </div>
+
+            <button type="button" disabled class="btn-out-of-stock">
+                Đã hết hàng
+            </button>
+        }
+
+        <hr class="separator" />
+
+        <div class="product-description-box">
+            <h5 class="description-title">📖 Mô tả chi tiết</h5>
+            <div class="description-content">
+                <p>@Model.ProductDecription</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="specs-section">
+    <h3 class="section-title">✨ Thông số kỹ thuật</h3>
+
+    <table class="specs-table">
+        <tbody>
+            @foreach (var item in Model.ProductDetails.OrderBy(d => d.OrderIndex))
+            {
+                <tr>
+                    <td class="specs-label">@item.SpecName</td>
+                    <td class="specs-value">@item.SpecValue</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@* --- PHẦN COMBO Mua kèm giá sốc (GIỮ NGUYÊN) --- *@
+@if (combo != null && combo.Any())
+{
+    var accessoryCount = combo.Count;
+    decimal comboAccessoriesTotal = combo.Sum(a => a.ProductPrice);
+    decimal grandTotal = finalPrice + comboAccessoriesTotal;
+
+    <form action="@Url.Action("AddComboToCart", "Cart")" method="post">
+        @Html.Hidden("productID", Model.ProductID)
+        @foreach (var a in combo)
+        {@Html.Hidden("accessoryIds", a.ProductID)}
+
+        <div class="combo-wrapper-new">
+            <h3 class="combo-new-title">⚡ Mua kèm giá sốc - Tiết kiệm tối đa</h3>
+            <div class="combo-new-inner">
+
+                <div class="combo-new-main">
+                    <img src="@Url.Content(Model.ProductImage)" alt="@Model.ProductName" class="combo-new-image-main" />
+                    <div class="combo-new-main-name">@Model.ProductName</div>
+                    <div class="combo-new-price main-price">@String.Format("{0:N0}", finalPrice) đ</div>
+                </div>
+
+                <div class="combo-new-plus-icon"><i class="fas fa-plus"></i></div>
+
+                <div class="combo-new-accessories">
+                    @foreach (var a in combo)
+                    {
+                        <a href="@Url.Action("Details", "Product", new { id = a.ProductID })" class="combo-new-item">
+                            <img src="@Url.Content(a.ProductImage)" alt="@a.ProductName" class="combo-new-image" />
+                            <div class="combo-new-name">@a.ProductName</div>
+                            <div class="combo-new-price accessory-price">@String.Format("{0:N0}", a.ProductPrice) đ</div>
+                        </a>
+                    }
+                </div>
+
+                <div class="combo-new-summary-box">
+                    <div class="combo-new-summary-header">
+                        <i class="fas fa-receipt"></i> Hóa đơn Combo
+                    </div>
+                    <div class="combo-new-summary-detail">
+                        <span class="detail-label">Giá máy:</span>
+                        <span class="detail-value">@String.Format("{0:N0}", finalPrice) đ</span>
+                    </div>
+                    <div class="combo-new-summary-detail">
+                        <span class="detail-label">Giá phụ kiện (@accessoryCount):</span>
+                        <span class="detail-value">@String.Format("{0:N0}", comboAccessoriesTotal) đ</span>
+                    </div>
+                    <hr class="summary-separator" />
+                    <div class="combo-new-total-price-row">
+                        <div class="combo-new-summary-title">Tổng Combo</div>
+                        <div class="combo-new-total-price">@String.Format("{0:N0}", grandTotal) đ</div>
+                    </div>
+
+                    <button type="submit" class="btn-buy-combo-new">
+                        <i class="fas fa-shopping-basket"></i> Mua combo ngay
+                    </button>
+                    <small class="combo-note">Sản phẩm chính và @accessoryCount phụ kiện</small>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+
+@* --- SẢN PHẨM LIÊN QUAN (GIỮ NGUYÊN) --- *@
+@if (related != null && related.Any())
+{
+    <div class="related-products-wrapper">
+        <h3 class="section-title">Các sản phẩm liên quan</h3>
+        <div class="related-list">
+            @foreach (var p in related)
+            {
+                <a href="@Url.Action("Details", "Product", new { id = p.ProductID })" class="related-product-card">
+                    <img src="@Url.Content(p.ProductImage)" alt="@p.ProductName" class="related-image" />
+                    <div class="related-name">@p.ProductName</div>
+                    <div class="related-price">@String.Format("{0:N0}", p.ProductPrice) đ</div>
+                </a>
+            }
+        </div>
+    </div>
+}
