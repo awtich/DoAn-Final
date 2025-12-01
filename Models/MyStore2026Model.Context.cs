@@ -36,5 +36,6 @@ namespace DoAn_web.Models
         public virtual DbSet<Storage> Storages { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductDetail> ProductDetails { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }

@@ -19,7 +19,7 @@
         <AssociationConnector Association="MyStore2026Model.FK__OrderDeta__Order__44FF419A" ManuallyRouted="false" />
         <AssociationConnector Association="MyStore2026Model.FK__OrderDeta__Produ__440B1D61" ManuallyRouted="false" />
         <EntityTypeShape EntityType="MyStore2026Model.Discount" Width="1.5" PointX="12.125" PointY="6.375" />
-        <EntityTypeShape EntityType="MyStore2026Model.FlashSaleItem" Width="1.5" PointX="1.875" PointY="3.75" />
+        <EntityTypeShape EntityType="MyStore2026Model.FlashSaleItem" Width="1.5" PointX="2.125" PointY="3.625" />
 =======
       <Diagram DiagramId="82a1d65285c74f46b677e0cfa8f6ffc3" Name="Diagram1" ZoomLevel="63">
         <EntityTypeShape EntityType="MyStore2026Model.Category" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
